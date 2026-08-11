@@ -1,0 +1,26 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <EnablePackageVersionOverride>true</EnablePackageVersionOverride>
+    <NoWarn>$(NoWarn);NU1507;NU1900</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Генерация OpenAPI-документа из эндпоинтов -->
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+    <!-- Интерактивная документация API (альтернатива Swagger UI) -->
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.16.16" />
+    <!-- Транзитивный пин: пропатченная версия (CVE-2026-49451) -->
+    <PackageVersion Include="Microsoft.OpenApi" Version="2.7.5" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Правила рефакторинга и стиля кода -->
+    <PackageVersion Include="Roslynator.Analyzers" Version="4.15.0" />
+    <!-- Best-practices: производительность, корректность и стиль -->
+    <PackageVersion Include="Meziantou.Analyzer" Version="3.0.125" />
+    <!-- Sonar: безопасность и качество кода -->
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.30.0.144632" />
+    <!-- Диагностика проблем async/await -->
+    <PackageVersion Include="AsyncFixer" Version="2.1.0" />
+  </ItemGroup>
+</Project>
