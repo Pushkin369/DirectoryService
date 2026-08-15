@@ -30,7 +30,7 @@ function Show-Menu {
     Write-Host "   5. RESET   - остановить И удалить все данные БД"  -ForegroundColor Red
     Write-Host "   0. EXIT    - закрыть"
     Write-Host ""
-    Write-Host "   pgAdmin  : http://localhost:5050  (admin@local.dev / admin)"
+    Write-Host "   pgAdmin  : http://localhost:5050  (логин/пароль — см. .env.example)"
     Write-Host "   Postgres : localhost:5433         (логин/пароль — см. .env.example)"
     Write-Host ""
 }
