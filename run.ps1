@@ -31,7 +31,7 @@ function Show-Menu {
     Write-Host "   0. EXIT    - закрыть"
     Write-Host ""
     Write-Host "   pgAdmin  : http://localhost:5050  (admin@local.dev / admin)"
-    Write-Host "   Postgres : localhost:5433         (appuser / пароль из .env)"
+    Write-Host "   Postgres : localhost:5433         (логин/пароль — см. .env.example)"
     Write-Host ""
 }
 
