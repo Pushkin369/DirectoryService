@@ -10,6 +10,8 @@
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
     <!-- Интерактивная документация API (альтернатива Swagger UI) -->
     <PackageVersion Include="Scalar.AspNetCore" Version="2.16.16" />
+    <!-- Провайдер EF Core для PostgreSQL (мажор-минор = версия EF Core) -->
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
     <!-- Транзитивный пин: пропатченная версия (CVE-2026-49451) -->
     <PackageVersion Include="Microsoft.OpenApi" Version="2.7.5" />
   </ItemGroup>
