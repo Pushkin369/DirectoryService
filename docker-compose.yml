@@ -1,0 +1,67 @@
+# ============================================================================
+# Docker Compose — локальная инфраструктура для разработки
+#
+# Переменные ${...} читаются из файла .env (лежит рядом, в git не попадает).
+# Шаблон переменных — в .env.example.
+#
+# Запуск:        docker compose up -d      (флаг -d = в фоновом режиме)
+# Остановка:     docker compose down
+# Стирать данные: docker compose down -v   (-v = удалить тома/volumes)
+# Логи:          docker compose logs -f postgres
+# ============================================================================
+
+services:
+  # ---------- PostgreSQL: сама база данных ----------
+  postgres:
+    image: postgres:18-alpine              # образ и версия; alpine = уменьшенная ОС внутри
+    container_name: directoryservice-postgres  # фиксированное имя контейнера (удобно для логов)
+    environment:                           # переменные окружения внутри контейнера
+                                           # ${VAR} подставляется из файла .env (см. его)
+      POSTGRES_USER: ${POSTGRES_USER}      # имя суперпользователя БД
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # его пароль (для локальной разработки, не для прода)
+      POSTGRES_DB: ${POSTGRES_DB}          # база, которая создаётся при ПЕРВОМ старте
+    ports:
+      - "5433:5432"                        # формат "порт_на_хосте:порт_в_контейнере"
+                                           # 5433 снаружи, чтобы не конфликтовать с
+                                           # локально установленным PostgreSQL (его дефолт 5432).
+                                           # Подключение из Rider/VS: localhost:5433
+    volumes:
+      # Данные БД хранятся в томе Docker и переживают docker compose down.
+      # ВАЖНО: с Postgres 18 путь монтирования — /var/lib/postgresql (без /data),
+      # в старых туториалах для PG <= 17 пишут /var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql
+    healthcheck:                           # Docker периодически спрашивает: "жив ли ты?"
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]  # команда проверки
+      interval: 5s                         # как часто проверять
+      timeout: 5s                          # сколько ждать ответа
+      retries: 10                          # сколько попыток до статуса unhealthy
+    networks:
+      - directoryservice-net               # подключаем к общей приватной сети
+
+  # ---------- pgAdmin: веб-интерфейс для работы с БД ----------
+  pgadmin:
+    image: dpage/pgadmin4                  # официальный (де-факто) образ pgAdmin
+    container_name: directoryservice-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}       # логин в веб-интерфейс (из .env)
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD} # пароль в веб-интерфейс (из .env)
+    ports:
+      - "5050:80"                          # pgAdmin слушает 80 внутри, наружу отдаём 5050
+                                           # открывать в браузере: http://localhost:5050
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin      # сохраняем настройки и список подключений
+    depends_on:                            # порядок запуска
+      postgres:
+        condition: service_healthy         # ждать, пока БД реально примет подключения
+    networks:
+      - directoryservice-net
+
+# ---------- Именованные тома: место, где живут данные ----------
+volumes:
+  postgres-data:                           # файлы самой базы PostgreSQL
+  pgadmin-data:                            # настройки pgAdmin
+
+# ---------- Приватная сеть между контейнерами ----------
+networks:
+  directoryservice-net:                    # контейнеры видят друг друга по имени сервиса
+                                           # (pgadmin подключается к хосту "postgres")

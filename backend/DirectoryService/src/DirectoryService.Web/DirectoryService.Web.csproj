@@ -6,9 +6,14 @@
     <ProjectReference Include="..\DirectoryService.Domain\DirectoryService.Domain.csproj" />
     <ProjectReference Include="..\DirectoryService.Infrastructure.Postgres\DirectoryService.Infrastructure.Postgres.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="Scalar.AspNetCore" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <UserSecretsId>30a3c3f4-ce39-4b50-9d6d-ddd42c117cb5</UserSecretsId>
+  </PropertyGroup>
+
 </Project>
