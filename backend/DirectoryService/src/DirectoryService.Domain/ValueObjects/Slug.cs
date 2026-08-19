@@ -10,7 +10,7 @@ namespace DirectoryService.Domain.ValueObjects;
 /// </summary>
 public sealed record Slug
 {
-    private const int MaxLength = 100;
+    public const int MaxLength = 124;
 
     // Compiled + NonBacktracking: быстрый и устойчивый к ReDoS (анализаторы MA0009/S6444).
     // ExplicitCapture: группа нужна только для группировки, без захвата (MA0023).

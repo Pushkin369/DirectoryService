@@ -12,13 +12,14 @@ namespace DirectoryService.Domain.ValueObjects;
 /// </summary>
 public sealed record TreePath
 {
+    public const int MaxLength = 256;
+
     // Compiled + NonBacktracking: быстрый и устойчивый к ReDoS (анализаторы MA0009/S6444).
     // Non-capturing group (?:...) — группа нужна только для группировки (MA0023).
     private static readonly Regex SegmentPattern = new(
         @"^[a-z0-9]+(?:-[a-z0-9]+)*$",
         RegexOptions.Compiled | RegexOptions.NonBacktracking,
         TimeSpan.FromMilliseconds(100));
-
     public string Value { get; }
 
     private TreePath(string value)

@@ -12,6 +12,15 @@
     <PackageReference Include="Scalar.AspNetCore" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Нужен dotnet ef (CLI EF Core) для design-time сборки startup-проекта.
+         PrivateAssets=all: пакет не попадает в publish-вывод и не утекает транзитивно. -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
   <PropertyGroup>
     <UserSecretsId>30a3c3f4-ce39-4b50-9d6d-ddd42c117cb5</UserSecretsId>
   </PropertyGroup>

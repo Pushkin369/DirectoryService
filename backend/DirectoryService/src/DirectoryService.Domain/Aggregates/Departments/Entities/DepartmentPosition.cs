@@ -1,3 +1,5 @@
+using DirectoryService.Domain.Extensions;
+
 namespace DirectoryService.Domain.Aggregates.Departments.Entities;
 
 /// <summary>
@@ -6,24 +8,15 @@ namespace DirectoryService.Domain.Aggregates.Departments.Entities;
 /// </summary>
 public sealed class DepartmentPosition
 {
-    public DepartmentPosition(Guid id, Guid departmentId, Guid positionId)
+    private DepartmentPosition() { }   // для EF Core; доменный конструктор остаётся как есть
+    public DepartmentPosition( Guid departmentId, Guid positionId)
     {
-        Id = RequireNonEmpty(id, nameof(id));
-        DepartmentId = RequireNonEmpty(departmentId, nameof(departmentId));
-        PositionId = RequireNonEmpty(positionId, nameof(positionId));
+        Id = Guid.CreateVersion7();
+        DepartmentId = departmentId.EnsureNotEmpty(nameof(departmentId));
+        PositionId = positionId.EnsureNotEmpty(nameof(positionId));
     }
 
     public Guid Id { get; private set; }
     public Guid DepartmentId { get; private set; }
     public Guid PositionId { get; private set; }
-
-    private static Guid RequireNonEmpty(Guid value, string paramName)
-    {
-        if (value == Guid.Empty)
-        {
-            throw new ArgumentException($"{paramName} cannot be Guid.Empty.", paramName);
-        }
-
-        return value;
-    }
 }
