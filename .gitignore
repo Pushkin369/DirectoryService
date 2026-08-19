@@ -4,3 +4,6 @@
 
 # Кэш Visual Studio в корне репозитория
 .vs/
+
+# Сгенерированные артефакты run.ps1 (idempotent SQL-скрипты миграций и прочее)
+artifacts/

@@ -7,9 +7,15 @@ namespace DirectoryService.Domain.Aggregates.Locations;
 /// </summary>
 public sealed class Location
 {
-    public Location(Guid id, Name name, Address address)
+    // для EF Core; доменный конструктор остаётся как есть
+    private Location()
     {
-        Id = id;
+        Name = null!;
+        Address = null!;
+    }   
+    public Location(Name name, Address address)
+    {
+        Id = Guid.CreateVersion7();
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Address = address ?? throw new ArgumentNullException(nameof(address));
 

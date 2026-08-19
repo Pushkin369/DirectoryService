@@ -12,6 +12,7 @@
     <PackageVersion Include="Scalar.AspNetCore" Version="2.16.16" />
     <!-- Провайдер EF Core для PostgreSQL (мажор-минор = версия EF Core) -->
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.11" />
     <!-- Транзитивный пин: пропатченная версия (CVE-2026-49451) -->
     <PackageVersion Include="Microsoft.OpenApi" Version="2.7.5" />
   </ItemGroup>

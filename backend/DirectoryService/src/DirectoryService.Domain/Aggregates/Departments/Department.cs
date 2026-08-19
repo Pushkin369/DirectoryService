@@ -8,9 +8,17 @@ namespace DirectoryService.Domain.Aggregates.Departments;
 /// </summary>
 public sealed class Department
 {
-    public Department(Guid id, Name name, Slug slug, TreePath treePath, Guid? parentId = null)
+    // для EF Core; доменный конструктор остаётся как есть
+    private Department()
     {
-        Id = id;
+        Name = null!;
+        Slug = null!;
+        TreePath = null!;
+    }   
+    
+    public Department( Name name, Slug slug, TreePath treePath, Guid? parentId = null)
+    {
+        Id = Guid.CreateVersion7();
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Slug = slug ?? throw new ArgumentNullException(nameof(slug));
         TreePath = treePath ?? throw new ArgumentNullException(nameof(treePath));

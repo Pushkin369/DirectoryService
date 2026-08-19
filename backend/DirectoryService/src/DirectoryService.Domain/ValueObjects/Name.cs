@@ -6,7 +6,7 @@ namespace DirectoryService.Domain.ValueObjects;
 /// </summary>
 public sealed record Name
 {
-    private const int MaxLength = 200;
+    public const int MaxLength = 256;
 
     public string Value { get; }
 

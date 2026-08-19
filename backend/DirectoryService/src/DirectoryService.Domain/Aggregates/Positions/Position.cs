@@ -8,9 +8,15 @@ namespace DirectoryService.Domain.Aggregates.Positions;
 /// </summary>
 public sealed class Position
 {
-    public Position(Guid id, Name name)
+     // для EF Core; доменный конструктор остаётся как есть
+    private Position()
     {
-        Id = id;
+        Name = null!;
+    }  
+
+    public Position(Name name)
+    {
+        Id = Guid.CreateVersion7();
         Name = name ?? throw new ArgumentNullException(nameof(name));
 
         CreatedAt = DateTimeOffset.UtcNow;

@@ -6,7 +6,7 @@ namespace DirectoryService.Domain.ValueObjects;
 /// </summary>
 public sealed record Address
 {
-    private const int MaxFieldLength = 200;
+    public const int MaxFieldLength = 256;
 
     public string Country { get; }
     public string? Region { get; }
