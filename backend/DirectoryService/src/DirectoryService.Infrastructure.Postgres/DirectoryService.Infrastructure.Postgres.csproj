@@ -6,6 +6,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- EF-миграции - сгенерированный код (dotnet ef migrations add):
+         помечаем GeneratedCode, чтобы анализаторы качества (CA****, например CA1861
+         на массивы колонок составных индексов) его не проверяли. -->
+    <Compile Update="Migrations\**\*.cs">
+      <GeneratedCode>true</GeneratedCode>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

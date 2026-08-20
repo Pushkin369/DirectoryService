@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DirectoryService.Infrastructure.Postgres.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260819105514_Initial")]
+    [Migration("20260820071025_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -98,11 +98,12 @@ namespace DirectoryService.Infrastructure.Postgres.Migrations
                     b.HasKey("Id")
                         .HasName("pk_department_location");
 
-                    b.HasIndex("DepartmentId")
-                        .HasDatabaseName("ix_department_location_department_id");
-
                     b.HasIndex("LocationId")
                         .HasDatabaseName("ix_department_location_location_id");
+
+                    b.HasIndex("DepartmentId", "LocationId")
+                        .IsUnique()
+                        .HasDatabaseName("ux_department_location_pair");
 
                     b.ToTable("department_location", (string)null);
                 });
@@ -125,11 +126,12 @@ namespace DirectoryService.Infrastructure.Postgres.Migrations
                     b.HasKey("Id")
                         .HasName("pk_department_position");
 
-                    b.HasIndex("DepartmentId")
-                        .HasDatabaseName("ix_department_position_department_id");
-
                     b.HasIndex("PositionId")
                         .HasDatabaseName("ix_department_position_position_id");
+
+                    b.HasIndex("DepartmentId", "PositionId")
+                        .IsUnique()
+                        .HasDatabaseName("ux_department_position_pair");
 
                     b.ToTable("department_position", (string)null);
                 });

@@ -41,12 +41,12 @@ namespace DirectoryService.Infrastructure.Postgres.Configurations
                 .Property(dp => dp.PositionId)
                 .HasColumnName("position_id");
 
-            builder
-                .HasIndex(dp => dp.DepartmentId)
-                .HasDatabaseName("ix_department_position_department_id");
 
-            builder
-                .HasIndex(dp => dp.PositionId)
+            builder.HasIndex(dp => new { dp.DepartmentId, dp.PositionId })
+                .IsUnique()
+                .HasDatabaseName("ux_department_position_pair");
+
+            builder.HasIndex(dp => dp.PositionId)
                 .HasDatabaseName("ix_department_position_position_id");
 
         }

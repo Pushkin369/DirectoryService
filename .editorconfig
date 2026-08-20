@@ -1,0 +1,8 @@
+# Корневой .editorconfig: настройки анализаторов по путям.
+root = true
+
+# EF-миграции - сгенерированный код (dotnet ef migrations add). Править его руками
+# нельзя, поэтому предупреждения анализаторов качества там бесполезны:
+# CA1861 ругается на new[] { "col1", "col2" } в составных индексах CreateIndex.
+[backend/DirectoryService/src/DirectoryService.Infrastructure.Postgres/Migrations/**.cs]
+dotnet_diagnostic.CA1861.severity = none
